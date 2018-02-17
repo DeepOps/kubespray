@@ -127,7 +127,25 @@ tiller_image_tag: "{{ helm_version }}"
 vault_image_repo: "vault"
 vault_image_tag: "{{ vault_version }}"
 
+dashboard_enabled: true
+dashboard_image_repo: gcr.io/google_containers/kubernetes-dashboard-amd64
+dashboard_image_tag: v1.8.1
+dashboard_init_image_repo: gcr.io/google_containers/kubernetes-dashboard-init-amd64
+dashboard_init_image_tag: v1.0.1
+
 downloads:
+  dashboard:
+    enabled: "{{ dashboard_enabled }}"
+    container: true
+    repo: "{{ dashboard_image_repo }}"
+    tag: "{{ dashboard_image_tag }}"
+    sha256: "{{ dashboard_digest_checksum|default(None) }}"
+  dashboard_init:
+    enabled: "{{ dashboard_enabled }}"
+    container: true
+    repo: "{{ dashboard_init_image_repo }}"
+    tag: "{{ dashboard_init_image_tag }}"
+    sha256: "{{ dashboard_init_digest_checksum|default(None) }}"
   netcheck_server:
     enabled: "{{ deploy_netchecker }}"
     container: true
